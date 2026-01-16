@@ -1,0 +1,16 @@
+# Font Configuration
+font-size = 14
+font-family = "Maple Mono Normal NF CN"
+
+# 增加文本内容与窗口边缘之间的内边距
+window-padding-x = 12
+window-padding-y = 12
+
+# 输入时隐藏鼠标
+mouse-hide-while-typing = true
+
+# 关闭 Ghostty 无须确认
+confirm-close-surface = false
+
+# Dank color generation
+theme = dankcolors
