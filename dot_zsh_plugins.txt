@@ -1,0 +1,23 @@
+# Zsh 补全系统
+mattmc3/ez-compinit                            # 加载 Zsh 补全系统
+zsh-users/zsh-completions kind:fpath path:src  # 增强命令补全
+
+# zephyr 套件补全 zsh 的默认配置
+mattmc3/zephyr path:plugins/color       # 色彩相关
+mattmc3/zephyr path:plugins/directory   # 目录操作
+mattmc3/zephyr path:plugins/editor      # 编辑操作
+mattmc3/zephyr path:plugins/environment # 环境变量相关
+mattmc3/zephyr path:plugins/history     # 命令历史
+mattmc3/zephyr path:plugins/utility     # 工具
+
+# 集成 fzf 和 zoxide
+ajeetdsouza/zoxide
+Aloxaf/fzf-tab
+
+# P10k 主题
+romkatv/powerlevel10k
+
+# 语法高亮和自动提示
+zsh-users/zsh-autosuggestions                         # 自动提示
+zsh-users/zsh-history-substring-search                # 历史搜索
+zdharma-continuum/fast-syntax-highlighting kind:defer # 语法高亮 (延迟加载)
