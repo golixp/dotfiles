@@ -1,0 +1,20 @@
+# 选择自定义的透明背景的 tokyonight 主题
+theme = "tokyonight_transparent"
+
+[editor.cursor-shape]
+insert = "bar"           # 插入模式光标为竖线
+normal = "block"         # 普通模式光标为方块
+select = "underline"     # 选择模式光标为下划线
+
+# 底部状态栏样式官方文档配置
+[editor.statusline]
+left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.file-picker]
+hidden = false           # 文件搜索时显示隐藏文件

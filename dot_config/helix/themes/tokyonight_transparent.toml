@@ -1,0 +1,4 @@
+# tokyonight 透明背景
+inherits = "tokyonight"
+
+"ui.background" = {}
