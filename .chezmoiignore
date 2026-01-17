@@ -1,0 +1,7 @@
+
+# 忽略 README 和 Markdown 文档
+README*
+*.md
+
+# 忽略 GitHub 相关配置
+.github/
