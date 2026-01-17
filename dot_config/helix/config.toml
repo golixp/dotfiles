@@ -1,5 +1,5 @@
 # 选择自定义的透明背景的 tokyonight 主题
-theme = "tokyonight_transparent"
+theme = "tokyonight"
 
 [editor.cursor-shape]
 insert = "bar"           # 插入模式光标为竖线

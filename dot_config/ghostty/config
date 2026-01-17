@@ -12,5 +12,4 @@ mouse-hide-while-typing = true
 # 关闭 Ghostty 无须确认
 confirm-close-surface = false
 
-# Dank color generation
-theme = dankcolors
+theme = TokyoNight
