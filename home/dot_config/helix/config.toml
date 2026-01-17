@@ -1,4 +1,4 @@
-# 选择自定义的透明背景的 tokyonight 主题
+# 选择主题
 theme = "tokyonight"
 
 [editor.cursor-shape]
