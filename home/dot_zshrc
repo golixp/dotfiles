@@ -57,4 +57,3 @@ bindkey '^[OA'   history-substring-search-up    2>/dev/null # '^[[A' 序列的�
 
 bindkey '^[[B'   history-substring-search-down  2>/dev/null # '^[[B' 序列的下方向键
 bindkey '^[OB'   history-substring-search-down  2>/dev/null # '^[OB' 序列的下方向键
-
