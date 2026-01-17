@@ -1,0 +1,9 @@
+input {
+    mouse {
+        // 关闭鼠标加速，使用 1:1 的映射
+        accel-profile "flat"
+        // 将速度偏移设置为 0。
+        // 取值范围通常是 -1.0 到 1.0。
+        accel-speed 0.2
+    }
+}
