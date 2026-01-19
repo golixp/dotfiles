@@ -15,5 +15,11 @@ confirm-close-surface = false
 # 开启 Shell 集成的相关特性
 shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
 
+# 窗口退出后保留后台进程
+quit-after-last-window-closed = false
+# 窗口退出后一定时间内保留进程
+# quit-after-last-window-closed = true
+# quit-after-last-window-closed-delay = 5m
+
 # theme = TokyoNight
 theme = Catppuccin Mocha
