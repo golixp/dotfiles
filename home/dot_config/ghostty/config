@@ -12,4 +12,8 @@ mouse-hide-while-typing = true
 # 关闭 Ghostty 无须确认
 confirm-close-surface = false
 
-theme = TokyoNight
+# 开启 Shell 集成的相关特性
+shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
+
+# theme = TokyoNight
+theme = Catppuccin Mocha
