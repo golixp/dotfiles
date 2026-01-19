@@ -1,0 +1,10 @@
+
+# 系统不为 Linux 则以下忽略的内容
+{{- if ne .chezmoi.os "linux" }}
+# .zshrc
+{{- end }}
+
+# 系统不为 Windows 则以下忽略的内容
+{{- if ne .chezmoi.os "windows" }}
+# AppData/
+{{- end }}
