@@ -1,8 +1,10 @@
-# P10k 即时提示
+# P10k 即时提示(必须在最顶部)
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+
+# --- 插件相关前置配置 ---
 # ez-compinit配置: 开启补全系统缓存
 # 路径优先级 $ZSH_COMPDUMP > $XDG_CACHE_HOME/zsh/zcompdump > ~/.cache/zsh/zcompdump 
 zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
@@ -25,6 +27,7 @@ zstyle ':completion:*:descriptions' format '[%d]'  # 窗口增加 group 标题
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:accept                               # 使用 Tab 键确认 fzf-tab 中的选项
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # 在 cd 界面使用 eza 显示目录内容
 
+
 # --- Antidote 启动部分 ---
 # 官方推荐的高性能启动方式
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
@@ -37,6 +40,7 @@ fi
 source ${zsh_plugins}.zsh
 # --- Antidote 启动结束 ---
 
+
 # 启动 P10k 主题
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -46,6 +50,7 @@ enable-fzf-tab
 # 修复 zephyr-directory 预设与补全系统的问题
 # 防止操作目录命令的 Tab 选项中出现隐藏文件
 unsetopt glob_dots
+
 
 # --- 快捷键绑定 ---
 # 绑定 Alt + S 为命令前增加 sudo
@@ -57,3 +62,25 @@ bindkey '^[OA'   history-substring-search-up    2>/dev/null # '^[[A' 序列的�
 
 bindkey '^[[B'   history-substring-search-down  2>/dev/null # '^[[B' 序列的下方向键
 bindkey '^[OB'   history-substring-search-down  2>/dev/null # '^[OB' 序列的下方向键
+
+
+# --- 用户函数 ---
+# 代理开启和关闭函数
+proxy_on() {
+  export http_proxy=http://127.0.0.1:7897
+  export https_proxy=http://127.0.0.1:7897
+  export all_proxy=socks5://127.0.0.1:7897
+}
+proxy_off() {
+  unset http_proxy https_proxy all_proxy
+}
+
+
+# --- 环境变量 ---
+# 开启代理
+export no_proxy=localhost,127.0.0.1,::1,10.0.0.0/8,192.168.0.0/16
+proxy_on
+
+# 配置默认编辑器, hx > vi
+export EDITOR=${${commands[hx]:+hx}:-vi}
+export VISUAL=$EDITOR
