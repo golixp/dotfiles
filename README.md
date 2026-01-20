@@ -59,3 +59,11 @@ chezmoi apply
 ```sh
 chezmoi cd
 ```
+
+## Fcitx5 配置
+
+```sh
+~/.config/fcitx5/profile               # 启用的输入法
+~/.config/fcitx5/config                # 全局快捷键设置
+~/.config/fcitx5/conf/classicui.conf   # 皮肤和字体
+```
