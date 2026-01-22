@@ -28,21 +28,13 @@ zstyle ':fzf-tab:*' fzf-flags --bind=tab:accept                               # 
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # 在 cd 界面使用 eza 显示目录内容
 
 
-# --- Antidote 启动部分 ---
-# 官方推荐的高性能启动方式
-zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
-[[ -f ${zsh_plugins}.txt ]] || touch ${zsh_plugins}.txt
-fpath=(/usr/share/zsh-antidote/functions $fpath)
-autoload -Uz antidote
-if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
-  antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
-fi
-source ${zsh_plugins}.zsh
-# --- Antidote 启动结束 ---
+# --- 加载插件 ---
+source ${ZDOTDIR:-~}/zsh_plugins.zsh
 
 
 # 启动 P10k 主题
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ${ZDOTDIR:-~}/p10k.zsh ]] || source ${ZDOTDIR:-~}/p10k.zsh
+
 
 # 启动fzf-tab
 enable-fzf-tab

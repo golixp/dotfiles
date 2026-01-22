@@ -11,8 +11,11 @@ mattmc3/zephyr path:plugins/history     # 命令历史
 mattmc3/zephyr path:plugins/utility     # 工具
 
 # 集成 fzf 和 zoxide
-ajeetdsouza/zoxide
+ajeetdsouza/zoxide kind:defer
 Aloxaf/fzf-tab
+
+# eza 相关别名
+# z-shell/zsh-eza
 
 # P10k 主题
 romkatv/powerlevel10k
