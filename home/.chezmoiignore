@@ -8,3 +8,8 @@
 {{- if ne .chezmoi.os "windows" }}
 # AppData/
 {{- end }}
+
+# 系统为 Android 则以下忽略的内容
+{{- if eq .chezmoi.os "android" }}
+home/dot_gitconfig
+{{- end }}
