@@ -39,6 +39,65 @@ fi
 # 启动fzf-tab
 enable-fzf-tab
 
+# --- eza aliases ---
+if (( $+commands[eza] )); then
+  typeset -ag eza_params
+  eza_params=(
+    '--git'
+    '--group'
+    '--icons'
+    '--group-directories-first'
+    '--time-style=iso'
+    '--color-scale=all'
+  )
+
+  alias ll='eza --all --header --long $eza_params'
+  alias llm='eza --all --header --long --sort=modified $eza_params'
+  alias lt='eza --tree $eza_params'
+  alias lg='eza --git-ignore $eza_params'
+fi
+
+# --- git aliases ---
+# 基本命令
+alias g='git'
+alias ga='git add'
+alias gst='git status'
+
+alias gss='git stash'
+alias gf='git fetch'
+alias grs='git reset'
+
+alias gb='git branch'
+alias gm='git merge'
+alias grb='git rebase'
+alias gcp='git cherry-pick'
+
+# clone 相关
+alias gcl='git clone --recurse-submodules'
+alias gcld1='git clone --depth=1 --recurse-submodules'
+
+# checkout 相关
+alias gco='git checkout'
+alias gcb='git checkout -b'
+
+# push/pull 相关
+alias gp='git push'
+alias gl='git pull'
+alias gpr='git pull --rebase'
+alias gpra='git pull --rebase --autostash'
+
+# log 相关
+alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=iso'
+alias gloga='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=iso --all'
+
+# commit 相关
+alias gc='git commit --verbose'
+alias gcm='git commit --message'
+alias gca='git commit --verbose --all'
+alias gcam='git commit --all --message'
+alias gc!='git commit --verbose --amend'
+
+
 # --- 快捷键绑定 ---
 
 # 配置 zsh-history-substring-search 快捷键
