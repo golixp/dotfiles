@@ -1,0 +1,15 @@
+
+{{- if ne .chezmoi.os "linux" }}
+# 系统不为 Linux 则以下忽略的内容
+.local/share/fcitx5/rime 
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+# 系统不为 Windows 则以下忽略的内容
+AppData/
+{{- end }}
+
+{{- if eq .chezmoi.os "android" }}
+# 系统为 Android 则以下忽略的内容
+.gitconfig
+{{- end }}
