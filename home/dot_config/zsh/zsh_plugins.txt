@@ -8,7 +8,7 @@ mattmc3/zephyr path:plugins/environment # 环境变量相关
 mattmc3/zephyr path:plugins/history     # 命令历史
 mattmc3/zephyr path:plugins/utility     # 工具
 
-# 集成 fzf 和 zoxide
+# 集成 fzf
 Aloxaf/fzf-tab
 
 # P10k 主题
