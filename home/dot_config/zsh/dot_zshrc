@@ -53,6 +53,7 @@ if (( $+commands[eza] )); then
 
   alias ll='eza --all --header --long $eza_params'
   alias llm='eza --all --header --long --sort=modified $eza_params'
+  alias lls='eza --all --header --long --total-size $eza_params'
   alias lt='eza --tree $eza_params'
   alias lg='eza --git-ignore $eza_params'
 fi
