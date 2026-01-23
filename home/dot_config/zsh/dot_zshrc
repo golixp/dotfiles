@@ -106,6 +106,9 @@ zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
 # 只有 ohmy 预设与 fzf-tab 兼容, 其它模式 group 标题会有无法渲染的占位符
 zstyle ':plugin:ez-compinit' 'compstyle' 'ohmy'
 
+# zephyr配置: 关闭 magic-enter 预设功能
+zstyle ':zephyr:plugin:editor' 'magic-enter' no   # 回车自动执行 ls 或 git 命令
+
 # 配合 fzf-tab 相关补全选项
 zstyle ':completion:*:git-checkout:*' sort false   # git-checkout 关闭按字母排序
 zstyle ':completion:*:descriptions' format '[%d]'  # 窗口增加 group 标题
