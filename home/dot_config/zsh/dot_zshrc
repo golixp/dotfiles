@@ -14,11 +14,6 @@ zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
 # 只有 ohmy 预设与 fzf-tab 兼容, 其它模式 group 标题会有无法渲染的占位符
 zstyle ':plugin:ez-compinit' 'compstyle' 'ohmy'
 
-# zephyr配置: 启用和关闭一些 editor 预设功能
-zstyle ':zephyr:plugin:editor' 'prepend-sudo' yes # 快捷键加 sudo 功能
-zstyle ':zephyr:plugin:editor' 'pound-toggle' no  # 空格后显示别名原始形态
-zstyle ':zephyr:plugin:editor' 'magic-enter' no   # 回车自动执行 ls 或 git 命令
-
 # 配合 fzf-tab 相关补全选项
 zstyle ':completion:*:git-checkout:*' sort false   # git-checkout 关闭按字母排序
 zstyle ':completion:*:descriptions' format '[%d]'  # 窗口增加 group 标题
@@ -44,14 +39,7 @@ fi
 # 启动fzf-tab
 enable-fzf-tab
 
-# 修复 zephyr-directory 预设与补全系统的问题
-# 防止操作目录命令的 Tab 选项中出现隐藏文件
-unsetopt glob_dots
-
-
 # --- 快捷键绑定 ---
-# 绑定 Alt + S 为命令前增加 sudo
-bindkey '\es' prepend-sudo
 
 # 配置 zsh-history-substring-search 快捷键
 bindkey '^[[A'   history-substring-search-up    2>/dev/null # '^[[A' 序列的上方向键
