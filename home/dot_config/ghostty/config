@@ -13,7 +13,7 @@ mouse-hide-while-typing = true
 confirm-close-surface = false
 
 # 开启 Shell 集成的相关特性
-shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
+shell-integration-features = cursor,sudo,title,ssh-env,no-ssh-terminfo
 
 # 窗口退出后保留后台进程
 quit-after-last-window-closed = false
