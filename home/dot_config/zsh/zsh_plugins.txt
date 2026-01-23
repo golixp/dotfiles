@@ -1,3 +1,5 @@
+zsh-users/zsh-completions kind:fpath path:src  # 增强命令补全
+
 # zephyr 套件补全 zsh 的默认配置
 mattmc3/zephyr path:plugins/color       # 色彩相关
 mattmc3/zephyr path:plugins/directory   # 目录操作
@@ -12,9 +14,8 @@ Aloxaf/fzf-tab
 # P10k 主题
 romkatv/powerlevel10k
 
-# Zsh 补全系统
-mattmc3/ez-compinit                            # 加载 Zsh 补全系统
-zsh-users/zsh-completions kind:fpath path:src  # 增强命令补全
+# Zsh 补全系统加载
+mattmc3/ez-compinit  # 加载 Zsh 补全系统
 
 # 自动提示
 zsh-users/zsh-autosuggestions               # 自动提示
