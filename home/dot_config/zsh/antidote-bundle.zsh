@@ -24,6 +24,7 @@ antidote bundle < $ZSH_DIR/zsh_plugins.txt > $ZSH_DIR/zsh_plugins.zsh
 
 # antidote 更新插件以及自身
 (
+  # 防止 __antidote_update_tmpdir 变量未定义报错
   set +u
   antidote update
 )
