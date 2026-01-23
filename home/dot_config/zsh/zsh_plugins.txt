@@ -11,7 +11,6 @@ mattmc3/zephyr path:plugins/history     # 命令历史
 mattmc3/zephyr path:plugins/utility     # 工具
 
 # 集成 fzf 和 zoxide
-ajeetdsouza/zoxide kind:defer
 Aloxaf/fzf-tab
 
 # eza 相关别名

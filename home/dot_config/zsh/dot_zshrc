@@ -36,6 +36,11 @@ source ${ZDOTDIR:-~}/zsh_plugins.zsh
 [[ ! -f ${ZDOTDIR:-~}/p10k.zsh ]] || source ${ZDOTDIR:-~}/p10k.zsh
 
 
+# 初始化 zoxide
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
+
 # 启动fzf-tab
 enable-fzf-tab
 
