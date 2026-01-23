@@ -71,5 +71,11 @@ proxy_off() {
 
 # --- 环境变量 ---
 # 配置默认编辑器, hx > vi
-export EDITOR=${${commands[hx]:+hx}:-vi}
+if (( $+commands[hx] )); then
+  export EDITOR=hx
+elif (( $+commands[vim] )); then
+  export EDITOR=vim
+else
+  export EDITOR=vi
+fi
 export VISUAL=$EDITOR
