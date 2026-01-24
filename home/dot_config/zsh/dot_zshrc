@@ -41,6 +41,7 @@ alias gloga='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgr
 alias gc='git commit --verbose'
 alias gcm='git commit --message'
 alias 'gc!'='git commit --verbose --amend'
+alias 'gcn!'='git commit --verbose --no-edit --amend'
 
 # --- eza aliases ---
 if (( $+commands[eza] )); then
