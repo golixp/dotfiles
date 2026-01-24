@@ -7,6 +7,7 @@ fi
 # 基本命令
 alias g='git'
 alias ga='git add'
+alias gaa='git add --all'
 alias gst='git status'
 
 alias gss='git stash'
@@ -29,8 +30,8 @@ alias gcb='git checkout -b'
 # push/pull 相关
 alias gp='git push'
 alias gl='git pull'
-alias gpr='git pull --rebase'
-alias gpra='git pull --rebase --autostash'
+alias glr='git pull --rebase'
+alias glra='git pull --rebase --autostash'
 
 # log 相关
 alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=iso'
@@ -39,8 +40,6 @@ alias gloga='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgr
 # commit 相关
 alias gc='git commit --verbose'
 alias gcm='git commit --message'
-alias gca='git commit --verbose --all'
-alias gcam='git commit --all --message'
 alias 'gc!'='git commit --verbose --amend'
 
 # --- eza aliases ---
@@ -85,7 +84,7 @@ proxy_off() {
 
 
 # --- 环境变量 ---
-# 配置默认编辑器, hx > vi
+# 配置默认编辑器, hx > vim >vi
 if (( $+commands[hx] )); then
   export EDITOR=hx
 elif (( $+commands[vim] )); then
@@ -95,6 +94,10 @@ else
 fi
 export VISUAL=$EDITOR
 
+
+# --- other settings ---
+# 配置 zsh 粘贴内容时不做高亮显示
+zle_highlight+=(paste:none)
 
 # --- 加载插件 ---
 # ez-compinit配置: 开启补全系统缓存
