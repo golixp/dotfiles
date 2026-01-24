@@ -47,7 +47,7 @@ if (( $+commands[eza] )); then
   typeset -ag eza_params
   eza_params=(
     '--git'
-    '--group'
+    '--smart-group'
     '--icons'
     '--group-directories-first'
     '--time-style=iso'
