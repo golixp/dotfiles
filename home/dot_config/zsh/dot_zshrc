@@ -95,6 +95,8 @@ else
 fi
 export VISUAL=$EDITOR
 
+# 配置 less 分页参数
+export LESS='-g -i -M -R -S -w'
 
 # --- other settings ---
 # 配置 zsh 粘贴内容时不做高亮显示
