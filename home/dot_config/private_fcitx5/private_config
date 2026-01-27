@@ -31,7 +31,7 @@ TogglePreedit=
 ModifierOnlyKeyTimeout=250
 
 [Hotkey/TriggerKeys]
-0=Control+space
+0=Super+space
 
 [Behavior]
 # 默认状态为激活
