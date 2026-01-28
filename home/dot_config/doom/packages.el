@@ -8,10 +8,15 @@
 ;;   3. Restart Emacs.
 ;;
 ;; Use 'C-h f package\!' to look up documentation for the `package!' macro.
-(package! mixed-pitch)
-;; (package! catppuccin-theme)
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
+
+;; 混合字体显示模式
+;; 对 org/md 使用以使正文使用非等宽字体, 代码块等使用等宽字体
+;; (package! mixed-pitch)
+
+;; ;; catppuccin-theme 主题
+;; (package! catppuccin-theme)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

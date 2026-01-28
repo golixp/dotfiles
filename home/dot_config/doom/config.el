@@ -1,33 +1,58 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
+
+;; --- 基础配置 ---
+;; 显示行号
+(setq display-line-numbers-type t)
+
+;; 主题配置, M-x `load-theme' 可以载入主题
+(setq doom-theme 'doom-one)
+
+;; 配置默认打开路径
+(setq default-directory "~/project/")
+
+;; org-mode 目录
+(setq org-directory "~/project/notes/org/")
+
+;; 强制使用英文时间戳
+(setq system-time-locale "C")
+
+;; 字体配置
+(setq doom-font (font-spec :family "等距更纱黑体 SC" :size 16 :weight 'Regular)
+;; (setq doom-font (font-spec :family "Maple Mono Normal NF CN" :size 16 :weight 'Regular)
+      doom-big-font (font-spec :family "Maple Mono Normal NF CN" :size 24)
+      doom-variable-pitch-font (font-spec :family "LXGW WenKai" :size 16)
+      doom-serif-font (font-spec :family "Noto Serif CJK SC" :weight 'light)
+      doom-symbol-font (font-spec :family "Noto Color Emoji"))
+
+
+;; 插件配置 ---
+;; 输入法自动切换
+(after! fcitx
+  (setq! fcitx-remote-command "fcitx5-remote"))
+
+;; 状态栏显示项目和路径
+(after! doom-modeline
+  (setq! doom-modeline-buffer-file-name-style 'file-name-with-project)
+  (setq! doom-modeline-persp-name t)
+  (setq! doom-modeline-display-default-persp-name t)
+  )
 
 ;; 项目列表忽略的目录
 (after! projectile
   (add-to-list 'projectile-ignored-projects "~/.config/emacs/"))
 
-;; 配置默认打开路径
-(setq default-directory "~/project/")
-
-;; 输入法自动切换
-(after! fcitx
-  (setq fcitx-remote-command "fcitx5-remote"))
-
-;; 状态栏显示项目和路径
-(after! doom-modeline
-  (setq doom-modeline-buffer-file-name-style 'file-name-with-project))
-
 ;; 开启顶部 lsp 导航栏
 (after! lsp-mode
-  (setq lsp-headerline-breadcrumb-enable t))
+  (setq! lsp-headerline-breadcrumb-enable t))
 
 ;; 快捷键提示栏打开速度(秒)
 (after! which-key
-  (setq which-key-idle-delay 0.2))
+  (setq! which-key-idle-delay 0.2))
 
+;; evil 相关快捷键配置
 (after! evil
-  ;; 定义宏，修改删除操作默认寄存器
+  ;; 定义宏, 修改删除操作默认寄存器
   (defmacro my/without-yanking (command)
     `(lambda (&optional count)
        (interactive "P")
@@ -55,10 +80,35 @@
   ;; Visual 模式粘贴不覆盖寄存器
   (setq evil-kill-on-visual-paste nil))
 
+;; vterm 终端配置
 (after! vterm
   (map! :map vterm-mode-map
         :i "C-y" #'vterm-yank
         :i "C-v" #'vterm-yank))
+
+;; 配置 org-roam 使用和 logseq 相同的路径和配置
+(after! org-roam
+  ;; 核心路径设置
+  (setq! org-roam-directory (file-truename "~/project/notes/")
+         org-roam-dailies-directory "journals/")
+
+  ;; 排除 Logseq 内部目录, 防止索引垃圾文件
+  (setq! org-roam-file-exclude-regexp (rx (or ".git/" "logseq/" "org/")))
+
+  ;; 配置普通文件模板
+  (setq! org-roam-capture-templates
+         '(("d" "default" plain "%?"
+            :target (file+head "pages/${slug}.org" "#+title: ${title}\n")
+            :unnarrowed t)))
+
+  ;; 配置日记文件模板
+  (setq! org-roam-dailies-capture-templates
+         '(("d" "default" entry "* %?"
+            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+
+  ;; 强制使用 ID 链接
+  ;; (setq! org-id-link-to-org-use-id t)
+  )
 
 ;; 禁止 Emacs 系统剪切板同步
 ;; (setq select-enable-clipboard nil)
@@ -91,84 +141,3 @@
 ;;         "C-S-v" #'my/vterm-paste
 ;;         "C-S-c" #'my/vterm-copy)
 ;;   )
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom:
-;;
-;; - `doom-font' -- the primary font to use
-;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;; - `doom-symbol-font' -- for symbols
-;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
-;;
-;; See 'C-h v doom-font' for documentation and more examples of what they
-;; accept.
-
-;; 字体配置
-(after! mixed-pitch
-  (set-face-attribute 'variable-pitch nil :weight 'regular))
-(setq doom-font (font-spec :family "Maple Mono Normal NF CN" :size 16 :weight 'Regular)
-      doom-variable-pitch-font (font-spec :family "LXGW WenKai" :size 16 :weight 'Regular))
-;; doom-variable-pitch-font (font-spec :family "更纱黑体 SC" :size 16 :weight 'Regular))
-;; doom-variable-pitch-font (font-spec :family "等距更纱黑体 SC" :size 16 :weight 'Regular))
-;; 非等宽字体配置特定文档格式使用
-(use-package! mixed-pitch :hook
-  (org-mode . mixed-pitch-mode)
-  (markdown-mode . mixed-pitch-mode))
-
-;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-;; refresh your font settings. If Emacs still can't find your font, it likely
-;; wasn't installed correctly. Font issues are rarely Doom issues!
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-;; (setq doom-theme 'catppuccin)
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-
-;; Whenever you reconfigure a package, make sure to wrap your config in an
-;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
-;;
-;;   (after! PACKAGE
-;;     (setq x y))
-;;
-;; The exceptions to this rule:
-;;
-;;   - Setting file/directory variables (like `org-directory')
-;;   - Setting variables which explicitly tell you to set them before their
-;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-;;   - Setting doom variables (which start with 'doom-' or '+').
-;;
-;; Here are some additional functions/macros that will help you configure Doom.
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-;; etc).
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
