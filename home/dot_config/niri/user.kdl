@@ -7,3 +7,17 @@ input {
         accel-speed 0.2
     }
 }
+
+// 配置 Firefox 默认最大化
+window-rule {
+    match app-id="firefox"
+    open-maximized true
+}
+
+// 配置 Clash Verge 窗口默认悬浮
+window-rule {
+    match app-id="clash-verge"
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.8; }
+}
