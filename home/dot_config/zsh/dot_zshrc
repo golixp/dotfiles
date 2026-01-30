@@ -27,6 +27,12 @@ alias gcld1='git clone --depth=1 --recurse-submodules'
 alias gco='git checkout'
 alias gcb='git checkout -b'
 
+# diff 相关
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gdw='git diff --word-diff'
+alias gdsw='git diff --staged --word-diff'
+
 # push/pull 相关
 alias gp='git push'
 alias gl='git pull'
