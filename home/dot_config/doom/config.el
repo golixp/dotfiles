@@ -1,10 +1,15 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-(after! nerd-icons
-  (setq nerd-icons-font-family "Symbols Nerd Font"))
+;; (after! nerd-icons
+;;   (setq nerd-icons-font-family "Symbols Nerd Font"))
 
 ;; --- 基础配置 ---
 ;; 显示行号
 (setq display-line-numbers-type t)
+
+;; 配置编辑时底部空行数量
+(setq! scroll-margin 8
+       scroll-conservatively 101
+       scroll-preserve-screen-position t)
 
 ;; 主题配置, M-x `load-theme' 可以载入主题
 (setq doom-theme 'doom-one)
