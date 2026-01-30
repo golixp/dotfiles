@@ -89,9 +89,18 @@
 
 ;; vterm 终端配置
 (after! vterm
+
+  ;; 复制 vterm 选区到系统剪贴板
+  (defun my/vterm-copy ()
+    (interactive)
+    (when (use-region-p)
+      (gui-set-selection 'CLIPBOARD (buffer-substring (region-beginning) (region-end)))))
+
+  ;; 配置快捷键
   (map! :map vterm-mode-map
         :i "C-y" #'vterm-yank
-        :i "C-v" #'vterm-yank))
+        :i "C-S-v" #'vterm-yank
+        :i "C-S-c" #'my/vterm-copy))
 
 ;; 配置 org-roam 使用和 logseq 相同的路径和配置
 (after! org-roam
