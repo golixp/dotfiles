@@ -1,5 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
+(after! nerd-icons
+  (setq nerd-icons-font-family "Symbols Nerd Font"))
 
 ;; --- 基础配置 ---
 ;; 显示行号
