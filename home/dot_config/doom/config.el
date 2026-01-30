@@ -19,9 +19,10 @@
 (setq system-time-locale "C")
 
 ;; 字体配置
-(setq doom-font (font-spec :family "等距更纱黑体 SC" :size 16 :weight 'Regular)
-;; (setq doom-font (font-spec :family "Maple Mono Normal NF CN" :size 16 :weight 'Regular)
-      doom-big-font (font-spec :family "Maple Mono Normal NF CN" :size 24)
+(setq doom-font (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular)
+      ;; (setq doom-font (font-spec :family "Maple Mono Normal NF CN" :size 16 :weight 'Regular)
+      doom-big-font (font-spec :family "Sarasa Mono SC" :size 24)
+      ;; doom-big-font (font-spec :family "Maple Mono Normal NF CN" :size 24)
       doom-variable-pitch-font (font-spec :family "LXGW WenKai" :size 16)
       doom-serif-font (font-spec :family "Noto Serif CJK SC" :weight 'light)
       doom-symbol-font (font-spec :family "Noto Color Emoji"))
