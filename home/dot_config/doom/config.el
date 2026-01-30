@@ -112,39 +112,31 @@
   (setq! org-roam-dailies-capture-templates
          '(("d" "default" entry "* %?"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-
-  ;; 强制使用 ID 链接
-  ;; (setq! org-id-link-to-org-use-id t)
   )
 
-;; 禁止 Emacs 系统剪切板同步
-;; (setq select-enable-clipboard nil)
-;; (setq select-enable-primary nil)
-
-;; (map! :leader
-;;       "y y" #'clipboard-kill-ring-save   ; 复制到系统剪切板
-;;       "y p" #'clipboard-yank)            ; 从系统剪切板粘贴
-
-
-;; (map! :map vterm-mode-map
-;;       "C-S-v" #'+vterm/paste
-;;       "C-S-c" #'my/vterm-copy)
-
-;; (after! vterm
-;;   ;; 粘贴系统剪贴板到 vterm
-;;   (defun my/vterm-paste ()
-;;     (interactive)
-;;     (when-let ((text (gui-backend-get-selection 'CLIPBOARD 'STRING)))
-;;       (vterm-send-string text)))
-
-;; ;; 复制 vterm 选区到系统剪贴板
-;; (defun my/vterm-copy ()
-;;   (interactive)
-;;   (when (use-region-p)
-;;     (gui-set-selection 'CLIPBOARD (buffer-substring (region-beginning) (region-end)))))
-
-;;   ;; 快捷键绑定
-;;   (map! :map vterm-mode-map
-;;         "C-S-v" #'my/vterm-paste
-;;         "C-S-c" #'my/vterm-copy)
-;;   )
+;; 配置 org capture 模板
+(after! org
+  (setq! org-capture-templates
+         '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
+            "* [ ] %?\n%U" :prepend t)
+           ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
+            "* %U %?" :prepend t)
+           ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
+            "[%<%H:%M>] %?")
+           ("p" "Templates for projects")
+           ("pt" "Project-local todo" entry
+            (file+headline +org-capture-project-todo-file "Inbox") "* TODO %?\n%a\n%U"
+            :prepend t)
+           ("pn" "Project-local notes" entry
+            (file+headline +org-capture-project-notes-file "Inbox") "* %U %?\n%a\n%U"
+            :prepend t)
+           ("pc" "Project-local changelog" entry
+            (file+headline +org-capture-project-changelog-file "Unreleased")
+            "* %U %?\n%a" :prepend t)
+           ("o" "Centralized templates for projects")
+           ("ot" "Project todo" entry #'+org-capture-central-project-todo-file
+            "* TODO %?\n%a\n%U" :heading "Tasks" :prepend nil)
+           ("on" "Project notes" entry #'+org-capture-central-project-notes-file
+            "* %U %?\n%a\n%U" :heading "Notes" :prepend t)
+           ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file
+            "* %U %?\n%a" :heading "Changelog" :prepend t))))
