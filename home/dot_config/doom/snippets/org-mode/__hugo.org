@@ -1,6 +1,6 @@
 #+TITLE: `(file-name-base (buffer-file-name))`
 #+DATE: `(format-time-string "[%Y-%m-%d %a %H:%M]")`
-#+HUGO_CUSTOM_FRONT_MATTER: :subtitle '' :series [] :series_weight 1
+#+HUGO_CUSTOM_FRONT_MATTER: :subtitle "" :series "" :series_weight 1
 #+HUGO_SECTION: posts
 #+FILETAGS:
 

@@ -1,7 +1,4 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;; (after! nerd-icons
-;;   (setq nerd-icons-font-family "Symbols Nerd Font"))
-
 ;; --- 基础配置 ---
 ;; 显示行号
 (setq display-line-numbers-type t)
@@ -24,7 +21,7 @@
 (setq system-time-locale "C")
 
 ;; 配置博客 org 笔记模板
-(set-file-template! "/posts/.*\\.org$" :trigger "__hugo-post.org" :mode 'org-mode)
+(set-file-template! "/posts/.*\\.org$" :trigger "__hugo.org" :mode 'org-mode)
 
 ;; 字体配置
 (setq doom-font (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular)
@@ -45,8 +42,7 @@
 (after! doom-modeline
   (setq! doom-modeline-buffer-file-name-style 'file-name-with-project)
   (setq! doom-modeline-persp-name t)
-  (setq! doom-modeline-display-default-persp-name t)
-  )
+  (setq! doom-modeline-display-default-persp-name t))
 
 ;; 项目列表忽略的目录
 (after! projectile
@@ -142,7 +138,9 @@
   (setq! org-hugo-base-dir "~/project/blog")
   ;; 自动写入最后修改时间
   (setq! org-hugo-auto-set-lastmod t)
-  )
+  ;; 报错时自动导出
+  (add-hook 'org-mode-hook #'org-hugo-auto-export-mode))
+
 
 
 ;; 配置 org-roam 使用和 logseq 相同的路径和配置
@@ -164,5 +162,3 @@
   (setq! org-roam-dailies-capture-templates
          '(("d" "default" entry "* %?"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-  )
-
