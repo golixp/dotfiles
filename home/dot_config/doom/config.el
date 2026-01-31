@@ -23,6 +23,9 @@
 ;; 强制使用英文时间戳
 (setq system-time-locale "C")
 
+;; 配置博客 org 笔记模板
+(set-file-template! "/posts/.*\\.org$" :trigger "__hugo-post.org" :mode 'org-mode)
+
 ;; 字体配置
 (setq doom-font (font-spec :family "Sarasa Mono SC" :size 16 :weight 'Regular)
       ;; (setq doom-font (font-spec :family "Maple Mono Normal NF CN" :size 16 :weight 'Regular)
