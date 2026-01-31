@@ -160,5 +160,5 @@
 
   ;; 配置日记文件模板
   (setq! org-roam-dailies-capture-templates
-         '(("d" "default" entry "* %?"
+         '(("d" "default" entry "%?"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
