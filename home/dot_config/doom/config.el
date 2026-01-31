@@ -61,35 +61,25 @@
   (setq! which-key-idle-delay 0.2))
 
 ;; evil 相关快捷键配置
-(after! evil
-  ;; 定义宏, 修改删除操作默认寄存器
-  (defmacro my/without-yanking (command)
-    `(lambda (&optional count)
-       (interactive "P")
-       (let ((evil-this-register ?_))
-         (call-interactively ,command))))
 
-  ;; 删除操作默认保存到黑洞寄存器
+;; 定义全局宏
+(defmacro my/without-yanking (command)
+  `(lambda (&optional count)
+     (interactive "P")
+     (let ((evil-this-register ?_))
+       (call-interactively ,command))))
+
+(after! evil
   (map! :nv "d" (my/without-yanking #'evil-delete)
         :nv "D" (my/without-yanking #'evil-delete-line)
         :nv "c" (my/without-yanking #'evil-change)
         :nv "C" (my/without-yanking #'evil-change-line)
-        :nv "x" (my/without-yanking #'evil-delete-char))
-
-  ;; 定义 X 为剪切
-  (map! :nv "X" #'evil-delete)
-
-  ;; 覆盖 evil 默认无用的 C-y 快捷键
-  ;; 增加 C-v 粘贴
-  (map! :i "C-y" #'yank
-        :i "C-v" #'yank)
-
-  ;; 覆盖无用的切换 Emacs 模式快捷键 C-z 为撤销
-  (map! :nvi "C-z" #'undo)
-
-  ;; Visual 模式粘贴不覆盖寄存器
-  (setq evil-kill-on-visual-paste nil))
-
+        :nv "x" (my/without-yanking #'evil-delete-char)
+        :nv "X" #'evil-delete
+        :i  "C-y" #'yank
+        :i  "C-v" #'yank
+        :nvi "C-z" #'undo)
+  (setq! evil-kill-on-visual-paste nil))
 ;; vterm 终端配置
 (after! vterm
 
@@ -105,29 +95,22 @@
         :i "C-S-v" #'vterm-yank
         :i "C-S-c" #'my/vterm-copy))
 
-;; 配置 org-roam 使用和 logseq 相同的路径和配置
-(after! org-roam
-  ;; 核心路径设置
-  (setq! org-roam-directory (file-truename "~/project/notes/")
-         org-roam-dailies-directory "journals/")
-
-  ;; 排除 Logseq 内部目录, 防止索引垃圾文件
-  (setq! org-roam-file-exclude-regexp (rx (or ".git/" "logseq/" "org/")))
-
-  ;; 配置普通文件模板
-  (setq! org-roam-capture-templates
-         '(("d" "default" plain "%?"
-            :target (file+head "pages/${slug}.org" "#+title: ${title}\n")
-            :unnarrowed t)))
-
-  ;; 配置日记文件模板
-  (setq! org-roam-dailies-capture-templates
-         '(("d" "default" entry "* %?"
-            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-  )
-
-;; 配置 org capture 模板
+;; 配置 org-mode
 (after! org
+
+  ;; 修复 org 下 evil 的默认覆盖
+  (map! :after evil-org
+        :map evil-org-mode-map
+        :nv "d" (my/without-yanking #'evil-org-delete)
+        :nv "D" (my/without-yanking #'evil-org-delete-line)
+        :nv "c" (my/without-yanking #'evil-org-change)
+        :nv "C" (my/without-yanking #'evil-org-change-line)
+        :nv "x" (my/without-yanking #'evil-org-delete-char)
+        :nv "X" #'evil-org-delete)
+
+  ;; Visual 模式粘贴不覆盖寄存器
+  (setq! evil-kill-on-visual-paste nil)
+
   (setq! org-capture-templates
          '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
             "* [ ] %?\n%U" :prepend t)
