@@ -32,7 +32,22 @@
       doom-serif-font (font-spec :family "Noto Serif CJK SC" :weight 'light)
       doom-symbol-font (font-spec :family "Noto Color Emoji"))
 
+;; 增加在当前模式和 fundamental-mode 模式切换的快捷键
+(defun my/toggle-fundamental-mode ()
+  "在当前模式和 fundamental-mode 之间切换。"
+  (interactive)
+  (if (eq major-mode 'fundamental-mode)
+      ;; 如果是 fundamental-mode，尝试恢复到之前的模式
+      ;; 如果没有记录，默认回到 text-mode
+      (funcall (or (get 'my/prior-mode 'state) #'text-mode))
+    ;; 否则，记录当前模式并切到 fundamental-mode
+    (put 'my/prior-mode 'state major-mode)
+    (fundamental-mode)
+    (message "Switched to fundamental-mode")))
 
+(map! :leader
+      (:prefix ("t" . "toggle")
+       :desc "Fundamental mode" "t" #'my/toggle-fundamental-mode))
 ;; 插件配置 ---
 ;; 输入法自动切换
 (after! fcitx
@@ -162,3 +177,4 @@
   (setq! org-roam-dailies-capture-templates
          '(("d" "default" entry "%?"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+)
