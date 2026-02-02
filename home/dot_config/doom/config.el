@@ -9,7 +9,7 @@
        scroll-preserve-screen-position t)
 
 ;; 主题配置, M-x `load-theme' 可以载入主题
-(setq doom-theme 'doom-one)
+(setq doom-theme 'catppuccin)
 
 ;; 配置默认打开路径
 (setq default-directory "~/project/")
