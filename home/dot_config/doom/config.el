@@ -20,6 +20,12 @@
 ;; 强制使用英文时间戳
 (setq system-time-locale "C")
 
+;; 配置 Git 更改提示条使用实心宽条
+(after! diff-hl
+  (define-fringe-bitmap 'my-solid-block [255] nil nil '(center repeated))
+  (setq! diff-hl-fringe-bmp-function (lambda (type pos) 'my-solid-block)))
+
+
 ;; 配置博客 org 笔记模板
 (set-file-template! "/posts/.*\\.org$" :trigger "__hugo.org" :mode 'org-mode)
 
