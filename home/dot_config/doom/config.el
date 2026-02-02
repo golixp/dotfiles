@@ -85,21 +85,27 @@
         :nv "D" (my/without-yanking #'evil-delete-line)
         :nv "c" (my/without-yanking #'evil-change)
         :nv "C" (my/without-yanking #'evil-change-line)
+        :nv "s" (my/without-yanking #'evil-substitute)
+        :nv "S" (my/without-yanking #'evil-change-line)
         :nv "x" (my/without-yanking #'evil-delete-char)
+        :nv [delete] (my/without-yanking #'evil-delete-char)
+        :nvi  [C-backspace] (my/without-yanking #'backward-kill-word)
+        :nvi  "C-k" (my/without-yanking #'kill-line)
+        ;; 保留 X 为剪切键
         :nv "X" #'evil-delete
+        ;; 配置编辑模式常用按键
         :i  "C-y" #'yank
         :i  "C-v" #'yank
-        :nvi "C-z" #'undo)
+        :i "C-z" #'undo)
   (setq! evil-kill-on-visual-paste nil))
+
 ;; vterm 终端配置
 (after! vterm
-
   ;; 复制 vterm 选区到系统剪贴板
   (defun my/vterm-copy ()
     (interactive)
     (when (use-region-p)
       (gui-set-selection 'CLIPBOARD (buffer-substring (region-beginning) (region-end)))))
-
   ;; 配置快捷键
   (map! :map vterm-mode-map
         :i "C-y" #'vterm-yank
@@ -108,20 +114,22 @@
 
 ;; 配置 org-mode
 (after! org
-
   ;; 修复 org 下 evil 的默认覆盖
   (map! :after evil-org
+        :map evil-org-mode-map
         :map evil-org-mode-map
         :nv "d" (my/without-yanking #'evil-org-delete)
         :nv "D" (my/without-yanking #'evil-org-delete-line)
         :nv "c" (my/without-yanking #'evil-org-change)
         :nv "C" (my/without-yanking #'evil-org-change-line)
         :nv "x" (my/without-yanking #'evil-org-delete-char)
+        :nv "s" (my/without-yanking #'evil-substitute)
+        :nv "S" (my/without-yanking #'evil-org-change-line)
+        :nvi [C-backspace] (my/without-yanking #'backward-kill-word)
+        ;; 保留 X 为剪切键
         :nv "X" #'evil-org-delete)
-
-  ;; Visual 模式粘贴不覆盖寄存器
   (setq! evil-kill-on-visual-paste nil)
-
+  ;; 配置 Capture 模板
   (setq! org-capture-templates
          '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
             "* [ ] %?\n%U" :prepend t)
@@ -177,4 +185,4 @@
   (setq! org-roam-dailies-capture-templates
          '(("d" "default" entry "%?"
             :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-)
+  )
