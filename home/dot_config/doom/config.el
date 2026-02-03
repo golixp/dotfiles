@@ -167,7 +167,9 @@
   (setq! org-hugo-base-dir "~/project/blog")
   ;; 自动写入最后修改时间
   (setq! org-hugo-auto-set-lastmod t)
-  ;; 报错时自动导出
+  ;; 禁止导出作者防止和 DoIt 主题冲突
+  (setq! org-export-with-author nil)
+  ;; 自动导出
   (add-hook 'org-mode-hook #'org-hugo-auto-export-mode))
 
 
