@@ -9,7 +9,7 @@
        scroll-preserve-screen-position t)
 
 ;; 主题配置, M-x `load-theme' 可以载入主题
-(setq doom-theme 'catppuccin)
+(setq doom-theme 'doom-moonlight)
 
 ;; 配置默认打开路径
 (setq default-directory "~/project/")
@@ -61,7 +61,7 @@
 
 ;; 状态栏显示项目和路径
 (after! doom-modeline
-  (setq! doom-modeline-buffer-file-name-style 'file-name-with-project)
+  (setq! doom-modeline-buffer-file-name-style 'truncate-nil)
   (setq! doom-modeline-persp-name t)
   (setq! doom-modeline-display-default-persp-name t))
 
@@ -77,8 +77,6 @@
 (after! which-key
   (setq! which-key-idle-delay 0.2))
 
-;; evil 相关快捷键配置
-
 ;; 定义全局宏
 (defmacro my/without-yanking (command)
   `(lambda (&optional count)
@@ -86,6 +84,7 @@
      (let ((evil-this-register ?_))
        (call-interactively ,command))))
 
+;; evil 相关快捷键配置
 (after! evil
   (map! :nv "d" (my/without-yanking #'evil-delete)
         :nv "D" (my/without-yanking #'evil-delete-line)
@@ -138,7 +137,7 @@
   ;; 配置 Capture 模板
   (setq! org-capture-templates
          '(("t" "Personal todo" entry (file+headline +org-capture-todo-file "Inbox")
-            "* [ ] %?\n%U" :prepend t)
+            "* TODO %?\n%U" :prepend t)
            ("n" "Personal notes" entry (file+headline +org-capture-notes-file "Inbox")
             "* %U %?" :prepend t)
            ("j" "Journal" entry (file+olp+datetree +org-capture-journal-file)
