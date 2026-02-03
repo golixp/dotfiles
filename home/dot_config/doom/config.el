@@ -168,10 +168,7 @@
   (setq! org-hugo-auto-set-lastmod t)
   ;; 禁止导出作者防止和 DoIt 主题冲突
   (setq! org-export-with-author nil)
-  ;; 自动导出
-  (add-hook 'org-mode-hook #'org-hugo-auto-export-mode))
-
-
+)
 
 ;; 配置 org-roam 使用和 logseq 相同的路径和配置
 (after! org-roam

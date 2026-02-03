@@ -5,3 +5,11 @@
 #+FILETAGS:
 
 $0
+
+* Local Variables :noexport:
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
+# Local Variables:
+# eval: (org-hugo-auto-export-mode 1)
+# End:
