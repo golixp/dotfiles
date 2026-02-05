@@ -8,9 +8,10 @@ input {
     }
 }
 
-// 配置 Firefox 默认最大化
+// 配置浏览器默认最大化
 window-rule {
     match app-id="firefox"
+    match app-id="zen"
     open-maximized true
 }
 
