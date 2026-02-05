@@ -36,7 +36,10 @@
       :map evil-org-mode-map
       :nv "d" (my/without-yanking #'evil-org-delete)
       :nv "x" (my/without-yanking #'evil-org-delete-char)
-      )
+      :nv "X" #'evil-org-delete)
+(after! org
+  (setq! evil-kill-on-visual-paste nil))
+
 
 ;; vterm 终端快捷键
 (after! vterm
