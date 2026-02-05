@@ -24,9 +24,11 @@
         ;; 保留 X 为剪切键
         :nv "X" #'evil-delete
         ;; 配置编辑模式常用按键
+        :i "C-S-c" #'kill-ring-save
         :i  "C-y" #'yank
         :i  "C-v" #'yank
-        :i "C-z" #'undo)
+        :i "C-z" #'undo
+        )
   (setq! evil-kill-on-visual-paste nil)
   )
 
