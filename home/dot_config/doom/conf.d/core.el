@@ -27,6 +27,11 @@
        scroll-conservatively 101
        scroll-preserve-screen-position t)
 
+;; 拆分窗口相关配置
+(setq window-combination-resize t  ; 让新窗口平分空间
+      evil-vsplit-window-right t   ; 垂直拆分在右侧
+      evil-split-window-below t)   ; 水平拆分在下方
+
 ;; --- 插件配置 ---
 ;; 状态栏显示项目和路径
 (after! doom-modeline
