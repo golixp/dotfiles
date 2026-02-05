@@ -124,12 +124,12 @@
         :map evil-org-mode-map
         :map evil-org-mode-map
         :nv "d" (my/without-yanking #'evil-org-delete)
-        :nv "D" (my/without-yanking #'evil-org-delete-line)
-        :nv "c" (my/without-yanking #'evil-org-change)
-        :nv "C" (my/without-yanking #'evil-org-change-line)
+        :nv "D" (my/without-yanking #'evil-delete-line)
+        :nv "c" (my/without-yanking #'evil-change)
+        :nv "C" (my/without-yanking #'evil-change-line)
         :nv "x" (my/without-yanking #'evil-org-delete-char)
         :nv "s" (my/without-yanking #'evil-substitute)
-        :nv "S" (my/without-yanking #'evil-org-change-line)
+        :nv "S" (my/without-yanking #'evil-change-line)
         :nvi [C-backspace] (my/without-yanking #'backward-kill-word)
         ;; 保留 X 为剪切键
         :nv "X" #'evil-org-delete)
