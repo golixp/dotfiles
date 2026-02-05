@@ -1,1 +1,13 @@
+
+# 配置默认配置路径
 export ZDOTDIR=$HOME/.config/zsh
+
+# 配置默认编辑器, nvim > vim >vi
+if (( $+commands[nvim] )); then
+  export EDITOR=nvim
+elif (( $+commands[vim] )); then
+  export EDITOR=vim
+else
+  export EDITOR=vi
+fi
+export VISUAL=$EDITOR

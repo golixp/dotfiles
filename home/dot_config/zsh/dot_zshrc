@@ -3,150 +3,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# --- git aliases ---
-# 基本命令
-alias g='git'
-alias ga='git add'
-alias gaa='git add --all'
-alias gst='git status'
+# 配置目录
+export ZSH_CONF_DIR="${ZDOTDIR:-~/zsh}/conf.d"
 
-alias gss='git stash'
-alias gf='git fetch'
-alias grs='git reset'
+# 加载自定义配置
+source "$ZSH_CONF_DIR/functions.zsh"
+source "$ZSH_CONF_DIR/aliases.zsh"
+source "$ZSH_CONF_DIR/options.zsh"
 
-alias gb='git branch'
-alias gm='git merge'
-alias grb='git rebase'
-alias gcp='git cherry-pick'
-
-# clone 相关
-alias gcl='git clone --recurse-submodules'
-alias gcld1='git clone --depth=1 --recurse-submodules'
-
-# checkout 相关
-alias gco='git checkout'
-alias gcb='git checkout -b'
-
-# diff 相关
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gdw='git diff --word-diff'
-alias gdsw='git diff --staged --word-diff'
-
-# push/pull 相关
-alias gp='git push'
-alias gl='git pull'
-alias glr='git pull --rebase'
-alias glra='git pull --rebase --autostash'
-
-# log 相关
-alias glog='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=iso'
-alias gloga='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset" --date=iso --all'
-
-# commit 相关
-alias gc='git commit --verbose'
-alias gcm='git commit --message'
-alias 'gc!'='git commit --verbose --amend'
-alias 'gcn!'='git commit --verbose --no-edit --amend'
-
-# --- eza aliases ---
-if (( $+commands[eza] )); then
-  typeset -ag eza_params
-  eza_params=(
-    '--git'
-    '--smart-group'
-    '--icons'
-    '--group-directories-first'
-    '--time-style=iso'
-    '--color-scale=all'
-  )
-
-  alias ll='eza --all --header --long $eza_params'
-  alias llm='eza --all --header --long --sort=modified $eza_params'
-  alias lls='eza --all --header --long --total-size $eza_params'
-  alias lt='eza --tree $eza_params'
-  alias lg='eza --git-ignore $eza_params'
-fi
-
-
-# --- 用户函数 ---
-# 代理开启
-proxy_on() {
-  # proxy_on 支持默认参数
-  # proxy_on 127.0.0.1 7890
-  local PROXY_HOST="${1:-127.0.0.1}"
-  local PROXY_PORT="${2:-7897}"
-
-  export http_proxy="http://${PROXY_HOST}:${PROXY_PORT}"
-  export https_proxy="http://${PROXY_HOST}:${PROXY_PORT}"
-  export all_proxy="socks5://${PROXY_HOST}:${PROXY_PORT}"
-  export no_proxy="localhost,127.0.0.1,::1,10.0.0.0/8,192.168.0.0/16"
-
-  echo "Proxy ON → ${PROXY_HOST}:${PROXY_PORT}"
-}
-# 代理关闭
-proxy_off() {
-  unset http_proxy https_proxy all_proxy no_proxy
-}
-
-
-# --- 环境变量 ---
-# 配置默认编辑器, hx > vim >vi
-if (( $+commands[hx] )); then
-  export EDITOR=hx
-elif (( $+commands[vim] )); then
-  export EDITOR=vim
-else
-  export EDITOR=vi
-fi
-export VISUAL=$EDITOR
-
-# 配置 less 分页参数
-export LESS='-g -i -M -R -S -w'
-
-# --- other settings ---
-# 配置 zsh 粘贴内容时不做高亮显示
-zle_highlight+=(paste:none)
-
-# --- 加载插件 ---
-# ez-compinit配置: 开启补全系统缓存
-# 路径优先级 $ZSH_COMPDUMP > $XDG_CACHE_HOME/zsh/zcompdump > ~/.cache/zsh/zcompdump 
-zstyle ':plugin:ez-compinit' 'use-cache' 'yes'
-
-# ez-compinit配置: 使用oh-my-zsh 风格的补全
-# 官方提供 styles: gremlin, ohmy, prez, zshzoo
-# 只有 ohmy 预设与 fzf-tab 兼容, 其它模式 group 标题会有无法渲染的占位符
-zstyle ':plugin:ez-compinit' 'compstyle' 'ohmy'
-
-# zephyr配置: 关闭 magic-enter 预设功能
-zstyle ':zephyr:plugin:editor' 'magic-enter' no   # 回车自动执行 ls 或 git 命令
-
-# 配合 fzf-tab 相关补全选项
-zstyle ':completion:*:git-checkout:*' sort false   # git-checkout 关闭按字母排序
-zstyle ':completion:*:descriptions' format '[%d]'  # 窗口增加 group 标题
-
-# fzf-tab 内部配置
-zstyle ':fzf-tab:*' fzf-flags --bind=tab:accept                               # 使用 Tab 键确认 fzf-tab 中的选项
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # 在 cd 界面使用 eza 显示目录内容
-
-source ${ZDOTDIR:-~}/zsh_plugins.zsh
-
-# 配置 zsh-history-substring-search 快捷键
-bindkey '^[[A'   history-substring-search-up    2>/dev/null # '^[[A' 序列的上方向键
-bindkey '^[OA'   history-substring-search-up    2>/dev/null # '^[[A' 序列的上方向键
-
-bindkey '^[[B'   history-substring-search-down  2>/dev/null # '^[[B' 序列的下方向键
-bindkey '^[OB'   history-substring-search-down  2>/dev/null # '^[OB' 序列的下方向键
-
-# 启动fzf-tab
-enable-fzf-tab
-
-# 初始化 zoxide
-if (( $+commands[zoxide] )); then
-  eval "$(zoxide init zsh)"
-fi
+# 加载插件
+source "$ZSH_CONF_DIR/plugins.zsh"
 
 # 启动 P10k 主题
 [[ ! -f ${ZDOTDIR:-~}/p10k.zsh ]] || source ${ZDOTDIR:-~}/p10k.zsh
-
-# --- 插件加载完成 ---
