@@ -1,9 +1,15 @@
 #+TITLE: `(file-name-base (buffer-file-name))`
 #+DATE: `(format-time-string "[%Y-%m-%d %a %H:%M]")`
 #+HUGO_CUSTOM_FRONT_MATTER: :subtitle "" :series '() :series_weight 1
-#+HUGO_SECTION: posts
-#+FILETAGS:
-
+#+HUGO_SECTION: `(let ((path (file-name-directory (buffer-file-name))))
+               (if (string-match "/posts/\\(.+\\)/$" path)
+                   (concat "posts/" (match-string 1 path))
+                 "posts"))`
+#+FILETAGS: `(let ((path (file-name-directory (or (buffer-file-name) ""))))
+               (if (string-match "/posts/\\([^/]+\\)/" path)
+                   (let ((tag (match-string 1 path)))
+                     (concat ":@" (capitalize tag) ":"))
+                 ":@Posts:"))`
 $0
 
 * Local Variables :noexport:
