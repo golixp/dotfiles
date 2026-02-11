@@ -18,6 +18,9 @@
 ;; catppuccin-theme 主题
 (package! catppuccin-theme)
 
+;; 行移动插件
+(package! drag-stuff)
+
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format

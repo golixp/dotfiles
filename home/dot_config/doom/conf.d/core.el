@@ -61,3 +61,9 @@
 ;; 快捷键提示栏打开速度(秒)
 (after! which-key
   (setq! which-key-idle-delay 0.2))
+
+;; 关闭 vterm 下的 evil 模式
+(after! vterm
+  (set-evil-initial-state! 'vterm-mode 'emacs)
+  (evil-make-intercept-map vterm-mode-map)
+  )

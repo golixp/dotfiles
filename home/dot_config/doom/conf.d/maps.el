@@ -1,5 +1,30 @@
 ;;; $DOOMDIR/conf.d/maps.el --- map 绑定相关配置 -*- lexical-binding: t; -*-
 
+;; Ctrl+S 保存
+(map! "C-s" #'save-buffer)
+
+;; 配置 drag-stuff 移动行快捷键
+(use-package! drag-stuff
+  :defer t
+  :hook (doom-first-input-hook . drag-stuff-global-mode)
+  :config
+  (setq drag-stuff-except-modes '(org-mode))
+  ;; 配置快捷键
+  (map! :nvi "M-k" #'drag-stuff-up
+        :nvi "M-j" #'drag-stuff-down
+        :nvi "M-<up>"    #'drag-stuff-up
+        :nvi "M-<down>"  #'drag-stuff-down
+        )
+  ;; 避免覆盖 org 移动子树快捷键
+  (map! :after org
+        :map org-mode-map
+        :nvi "M-k" #'org-metaup
+        :nvi "M-j" #'org-metadown
+        :nvi "M-<up>" #'org-metaup
+        :nvi "M-<down>" #'org-metadown
+        )
+
+  )
 
 ;; 定义编译期宏: 快捷配置指定寄存器
 (eval-when-compile
@@ -35,10 +60,11 @@
 ;; 修复 org 下 evil 的默认覆盖
 (map! :after evil-org
       :map evil-org-mode-map
-      :map evil-org-mode-map
       :nv "d" (my/without-yanking #'evil-org-delete)
       :nv "x" (my/without-yanking #'evil-org-delete-char)
       :nv "X" #'evil-org-delete)
+
+
 (after! org
   (setq! evil-kill-on-visual-paste nil))
 
@@ -54,9 +80,8 @@
 
   ;; 配置快捷键
   (map! :map vterm-mode-map
-        :i "C-y" #'vterm-yank
-        :i "C-S-v" #'vterm-yank
-        :i "C-S-c" #'my/vterm-copy)
+        "C-S-v" #'vterm-yank
+        "C-S-c" #'my/vterm-copy)
   )
 
 
@@ -79,3 +104,5 @@
       (:prefix ("t" . "toggle")
        :desc "Fundamental mode" "t" #'my/toggle-fundamental-mode)
       )
+
+
