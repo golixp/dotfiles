@@ -22,3 +22,4 @@ window-rule {
     default-column-width { proportion 0.5; }
     default-window-height { proportion 0.8; }
 }
+
