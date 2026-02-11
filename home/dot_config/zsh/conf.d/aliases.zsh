@@ -2,6 +2,9 @@
 
 ### 别名相关配置 ###
 
+# --- core aliases ---
+alias v='nvim'
+
 # --- git aliases ---
 # 基本命令
 alias g='git'
