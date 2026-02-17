@@ -67,3 +67,4 @@
   (set-evil-initial-state! 'vterm-mode 'emacs)
   (evil-make-intercept-map vterm-mode-map)
   )
+
