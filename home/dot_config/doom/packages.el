@@ -21,6 +21,9 @@
 ;; 行移动插件
 (package! drag-stuff)
 
+;; 导出 GitHub 风格 Markdown 插件
+(package! ox-gfm)
+
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
