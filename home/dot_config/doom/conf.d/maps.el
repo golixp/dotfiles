@@ -26,6 +26,14 @@
 
   )
 
+(defun my/backward-delete-word (arg)
+  "删除光标前的单词，但不将其放入 kill-ring。"
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
+;; 全局替换函数, 退格删除不进 kill-ring
+(map! [remap backward-kill-word] #'my/backward-delete-word)
+
 ;; 定义编译期宏: 快捷配置指定寄存器
 (eval-when-compile
   (defmacro my/without-yanking (command)
@@ -43,9 +51,6 @@
         :nv "s" (my/without-yanking #'evil-substitute)
         :nv "S" (my/without-yanking #'evil-change-line)
         :nv "x" (my/without-yanking #'evil-delete-char)
-        :nv [delete] (my/without-yanking #'evil-delete-char)
-        :nvi  [C-backspace] (my/without-yanking #'backward-kill-word)
-        :nvi  "C-k" (my/without-yanking #'kill-line)
         ;; 保留 X 为剪切键
         :nv "X" #'evil-delete
         ;; 配置编辑模式常用按键
