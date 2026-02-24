@@ -39,7 +39,7 @@
 
 (after! org
 
-  ;; (require 'ox-gfm nil t)
+  (require 'ox-gfm nil t)
 
   ;; 配置 Capture 模板
   (setq! org-capture-templates
