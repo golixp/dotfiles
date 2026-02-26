@@ -70,3 +70,56 @@
            )
          )
   )
+
+(use-package! org-transclusion
+  :after org
+  :config
+  (map! :map org-mode-map
+        :localleader
+         (:prefix ("v" . "transclusion")
+          :desc "Activate mode"          "t" #'org-transclusion-mode
+          :desc "Add at point"           "a" #'org-transclusion-add
+          :desc "Add all"                "A" #'org-transclusion-add-all
+          :desc "Remove at point"        "r" #'org-transclusion-remove
+          :desc "Remove all"             "R" #'org-transclusion-remove-all))
+)
+
+(defun my/org-dblock-write:range-dailies (start-date end-date &optional level)
+  "从 START-DATE 到 END-DATE 抓取日记并插入 transclusion 标签。
+日期格式为 (month day year) 列表。"
+  (let* ((daily-path "journals/")
+         (current-day-num (calendar-absolute-from-gregorian start-date))
+         (end-day-num (calendar-absolute-from-gregorian end-date))
+         (ins-level (or level 2)))
+
+    (while (<= current-day-num end-day-num)
+      (let* ((date (calendar-gregorian-from-absolute current-day-num))
+             (year (nth 2 date))
+             (month (nth 0 date))
+             (day (nth 1 date))
+             (date-str (format "%04d-%02d-%02d" year month day))
+             (file-name (concat date-str ".org"))
+             (abs-path (file-truename
+                        (expand-file-name file-name
+                                          (expand-file-name daily-path org-roam-directory)))))
+
+        (when (file-exists-p abs-path)
+          (insert (format "#+transclude: [[file:%s]] :level %d\n" abs-path ins-level)))
+        (setq current-day-num (1+ current-day-num))))
+    (org-align-all-tags)))
+
+(defun org-dblock-write:month-dailies (params)
+  "按月份生成日记列表"
+  (let* ((year (plist-get params :year))
+         (month (plist-get params :month))
+         (start (list month 1 year))
+         (end (list month (calendar-last-day-of-month month year) year)))
+    (insert (format "#+TITLE: %d年%02d月 日记汇总\n\n" year month))
+    (my/org-dblock-write:range-dailies start end (plist-get params :level))))
+
+(defun org-dblock-write:range-dailies (params)
+  "按自定义日期范围生成日记列表
+   参数示例: :from \"2023-10-01\" :to \"2023-10-15\""
+  (let* ((from (org-date-to-gregorian (plist-get params :from)))
+         (to (org-date-to-gregorian (plist-get params :to))))
+    (my/org-dblock-write:range-dailies from to (plist-get params :level))))

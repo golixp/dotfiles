@@ -24,6 +24,9 @@
 ;; 导出 GitHub 风格 Markdown 插件
 (package! ox-gfm)
 
+;; Org 嵌入显示
+(package! org-transclusion)
+
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
