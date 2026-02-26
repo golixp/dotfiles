@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/conf.d/maps.el --- map 绑定相关配置 -*- lexical-binding: t; -*-
 
 ;; Ctrl+S 保存
-(map! "C-s" #'save-buffer)
+(map! "C-s" #'basic-save-buffer)
 
 ;; 配置 drag-stuff 移动行快捷键
 (use-package! drag-stuff
