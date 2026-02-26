@@ -1,0 +1,22 @@
+// DMS Window Rules - Managed by DankMaterialShell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1772118694864004309 @name=zen
+window-rule {
+    match app-id="^zen$"
+    open-maximized true
+}
+
+// @id=wr_1772118859896135058 @name=firefox
+window-rule {
+    match app-id="^firefox$"
+    open-maximized true
+}
+
+// @id=wr_1772118884050950590 @name=clash-verge
+window-rule {
+    match app-id="^clash-verge$"
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { proportion 0.8; }
+}
