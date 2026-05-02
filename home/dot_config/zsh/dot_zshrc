@@ -14,5 +14,7 @@ source "$ZSH_CONF_DIR/options.zsh"
 # 加载插件
 source "$ZSH_CONF_DIR/plugins.zsh"
 
+export PATH="$PATH:$HOME/.npm-global/bin"
+
 # 启动 P10k 主题
 [[ ! -f ${ZDOTDIR:-~}/p10k.zsh ]] || source ${ZDOTDIR:-~}/p10k.zsh
