@@ -1,4 +1,4 @@
-spawn-at-startup "sh" "-c" "xrdb -merge ~/.Xresources"
+spawn-at-startup "sh" "-c" "test -f ~/.Xresources && xrdb -merge ~/.Xresources"
 
 input {
     mouse {

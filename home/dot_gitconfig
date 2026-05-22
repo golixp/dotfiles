@@ -10,3 +10,5 @@
 	clean = git-lfs clean -- %f
 [init]
 	defaultBranch = master
+[include]
+	path = ~/.gitconfig.local

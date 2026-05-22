@@ -1,7 +1,8 @@
 
 {{- if ne .chezmoi.os "linux" }}
 # 系统不为 Linux 则以下忽略的内容
-.local/share/fcitx5/rime 
+.config/fcitx5/
+.local/share/fcitx5/rime
 {{- end }}
 
 {{- if ne .chezmoi.os "windows" }}
