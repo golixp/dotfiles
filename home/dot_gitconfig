@@ -14,5 +14,11 @@
 [url "ssh://git@ssh.github.com:443/"]
 	insteadOf = git@github.com:
 	insteadOf = ssh://git@github.com/
+[includeIf "hasconfig:remote.*.url:git@github.com:*/*"]
+	path = ~/.gitconfig.github
+[includeIf "hasconfig:remote.*.url:ssh://git@github.com/*/*"]
+	path = ~/.gitconfig.github
+[includeIf "hasconfig:remote.*.url:ssh://git@ssh.github.com:443/*/*"]
+	path = ~/.gitconfig.github
 [include]
 	path = ~/.gitconfig.local

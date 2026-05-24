@@ -1,0 +1,2 @@
+[core]
+	sshCommand = ssh -F ~/.ssh/config -o ProxyCommand='socat - PROXY:127.0.0.1:%h:%p,proxyport=7897'
