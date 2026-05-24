@@ -3,6 +3,7 @@
 	email = golixp@outlook.com
 [core]
 	quotepath = false
+	sshCommand = ssh -F ~/.ssh/config
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
@@ -10,5 +11,8 @@
 	clean = git-lfs clean -- %f
 [init]
 	defaultBranch = master
+[url "ssh://git@ssh.github.com:443/"]
+	insteadOf = git@github.com:
+	insteadOf = ssh://git@github.com/
 [include]
 	path = ~/.gitconfig.local
