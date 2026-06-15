@@ -24,6 +24,10 @@
 ;; Org 嵌入显示
 (package! org-transclusion)
 
+;; mac 下用 sis 替代 fcitx，evil 模式自动切换输入法
+(when (featurep :system 'macos)
+  (package! sis))
+
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format

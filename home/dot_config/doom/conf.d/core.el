@@ -50,9 +50,19 @@
   (setq! diff-hl-fringe-bmp-function (lambda (type pos) 'my-solid-block))
   )
 
-;; 输入法自动切换
-(after! fcitx
-  (setq! fcitx-remote-command "fcitx5-remote"))
+;; 输入法自动切换：mac 用 sis，其它系统用 fcitx
+(if (featurep :system 'macos)
+    (use-package! sis
+      :hook ((doom-first-input . sis-global-cursor-color-mode)
+             (doom-first-input . sis-global-respect-mode)
+             (doom-first-input . sis-global-context-mode)
+             (doom-first-input . sis-global-inline-mode))
+      :config
+      (sis-ism-lazyman-config
+       "com.apple.keylayout.ABC"                  ; 英文
+       "com.apple.inputmethod.SCIM.Shuangpin"))   ; 系统拼音双拼
+  (after! fcitx
+    (setq! fcitx-remote-command "fcitx5-remote")))
 
 ;; 开启顶部 lsp 导航栏
 (after! lsp-mode
