@@ -1,11 +1,13 @@
 
 {{- if ne .chezmoi.os "linux" }}
-# 系统不为 Linux 则以下忽略的内容
+# 系统不为 Linux 则以下忽略的内容(Linux 桌面/输入法/容器专属)
 .config/fcitx5/
 .config/systemd/
+.config/fontconfig/
 .config/niri/
 .config/DankMaterialShell/
-.local/share/fcitx5/rime
+.config/containers/
+.local/share/fcitx5
 {{- end }}
 
 {{- if ne .chezmoi.os "darwin" }}
@@ -22,3 +24,6 @@ AppData/
 # 系统为 Android 则以下忽略的内容
 .gitconfig
 {{- end }}
+
+# 本机私有覆盖,任何平台都不纳入 chezmoi 管理(机密/机器特定配置放这里)
+.config/zsh/local.zsh

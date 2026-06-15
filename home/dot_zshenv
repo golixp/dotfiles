@@ -11,3 +11,6 @@ else
   export EDITOR=vi
 fi
 export VISUAL=$EDITOR
+
+# uv 管理的 Python 工具链(Linux/macOS 通用,~/.local/bin 放 python/uv 等 shim)
+export PATH="$HOME/.local/bin:$PATH"
