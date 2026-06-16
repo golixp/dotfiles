@@ -60,7 +60,7 @@
       :config
       (sis-ism-lazyman-config
        "com.apple.keylayout.ABC"                  ; 英文
-       "com.apple.inputmethod.SCIM.Shuangpin"))   ; 系统拼音双拼
+       "im.rime.inputmethod.Squirrel.Hans"))      ; 鼠须管（Rime 简体）
   (after! fcitx
     (setq! fcitx-remote-command "fcitx5-remote")))
 
