@@ -1,0 +1,92 @@
+# squirrel.custom.yaml
+# 鼠须管前端定制（patch 覆写，不直接改 squirrel.yaml，雾凇拼音升级不冲突）
+#
+# macOS 仿原生·毛玻璃皮肤（明/暗，跟随系统切换）：
+#   macos_light  亮
+#   macos_dark   暗
+#
+# 部署：输入法菜单 Deploy，或
+#   /Library/Input\ Methods/Squirrel.app/Contents/MacOS/Squirrel --reload
+# 回退原皮肤：删掉本文件，或把 color_scheme 两行改回 purity_of_form_custom 后重新部署。
+#
+# 颜色 = 0xAABBGGRR：AA 透明度(FF不透明，越小越透)，其后 蓝绿红。
+#   0xD75A00 = 蓝D7 绿5A 红00 = RGB(0,90,215)，macOS 系统蓝。
+#
+# 毛玻璃三要素：
+#   translucency: true        开启磨砂（模糊候选框背后的内容）
+#   back_color 带透明度        AA<FF 才透得出模糊（这里亮 0xCC≈80%、暗 0x80≈50%）
+#   mutual_exclusive: true     半透明色不叠加（保留）
+# 内外一致/无边框：不设 border_color。磨砂下边框是单独绘制的一层描边，即使与 back_color 同色同透
+#   明度，两层各自对磨砂合成仍会有细微色差（mutual_exclusive 管的是颜色叠加，治不了这个）。故直接
+#   不画边框；官方：未设 border_color 时 border_height/width 仅影响布局（当内边距用）。
+#   想彻底去内边距：把 border_height/border_width 设 0 或负值（负值还能收窄圆角留白）。
+
+patch:
+  style/color_scheme: macos_light            # 浅色（跟随系统）
+  style/color_scheme_dark: macos_dark        # 深色（跟随系统）
+
+  # ---------- 亮·毛玻璃 ----------
+  preset_color_schemes/macos_light:
+    name: "macOS 仿原生·亮"
+    author: 雾凇拼音定制
+    color_space: srgb
+    candidate_list_layout: linear            # 横排（旧 horizontal:true 已于 1.0.1 移除）
+    text_orientation: horizontal
+    inline_preedit: true                     # 拼音内嵌输入处，候选条不单独占行
+    inline_candidate: false
+    translucency: true                       # 开启磨砂
+    mutual_exclusive: true                   # 半透明不叠加 → 内外透明度一致（关键修正）
+    candidate_format: "[label] [candidate] [comment]"  # 序号紧贴候选词
+    font_face: "PingFangSC"
+    font_point: 16
+    label_font_point: 13                      # 序号略小 → 自动垂直居中，贴近原生
+    corner_radius: 5                          # 候选条圆角
+    hilited_corner_radius: 4                  # 高亮项圆角
+    border_height: 3                          # 上下内边距（薄）
+    border_width: 6                           # 左右内边距
+    line_spacing: 5
+    shadow_size: 0                            # 投影（想要悬浮感可设 3~5）
+    back_color: 0xCCF0F0F0                    # 浅色磨砂：AA=CC≈80%（白底下更实更清晰；更透改小如 0x99，更实改大如 0xE6）
+    # 不设 border_color（不画描边）→ 磨砂下内外透明度一致；border_height/width 仅作内边距
+    candidate_text_color: 0x3C3C3C
+    label_color: 0x999999
+    comment_text_color: 0x888888
+    text_color: 0x424242
+    hilited_candidate_back_color: 0xD75A00    # 第一候选背景：macOS 蓝（不透明，保证对比）
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0xE6E6E6
+    hilited_text_color: 0xFFFFFF
+
+  # ---------- 暗·毛玻璃 ----------
+  preset_color_schemes/macos_dark:
+    name: "macOS 仿原生·暗"
+    author: 雾凇拼音定制
+    color_space: srgb
+    candidate_list_layout: linear
+    text_orientation: horizontal
+    inline_preedit: true
+    inline_candidate: false
+    translucency: true
+    mutual_exclusive: true                   # 半透明不叠加 → 内外透明度一致
+    candidate_format: "[label] [candidate] [comment]"
+    font_face: "PingFangSC"
+    font_point: 16
+    label_font_point: 13
+    corner_radius: 5
+    hilited_corner_radius: 4
+    border_height: 3
+    border_width: 6
+    line_spacing: 5
+    shadow_size: 0
+    back_color: 0x802A2A2A                    # 深色磨砂：AA=80≈50%（更透改小如 0x59）
+    # 不设 border_color（不画描边）→ 磨砂下内外透明度一致；border_height/width 仅作内边距
+    candidate_text_color: 0xE9E9EA
+    label_color: 0x999999
+    comment_text_color: 0x999999
+    text_color: 0xCCCCCC
+    hilited_candidate_back_color: 0xD75A00
+    hilited_candidate_text_color: 0xFFFFFF
+    hilited_candidate_label_color: 0xFFFFFF
+    hilited_comment_text_color: 0xE6E6E6
+    hilited_text_color: 0xFFFFFF
