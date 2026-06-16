@@ -15,6 +15,9 @@
 ;; 对 org/md 使用以使正文使用非等宽字体, 代码块等使用等宽字体
 ;; (package! mixed-pitch)
 
+;; catppuccin-theme 主题
+(package! catppuccin-theme)
+
 ;; 行移动插件
 (package! drag-stuff)
 

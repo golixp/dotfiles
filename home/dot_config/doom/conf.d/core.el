@@ -51,18 +51,27 @@
   )
 
 ;; 输入法自动切换：mac 用 sis，其它系统用 fcitx
+;; 注：不启用 sis-global-inline-mode，避免中文输入时空格触发临时英文模式
 (if (featurep :system 'macos)
     (use-package! sis
       :hook ((doom-first-input . sis-global-cursor-color-mode)
              (doom-first-input . sis-global-respect-mode)
-             (doom-first-input . sis-global-context-mode)
-             (doom-first-input . sis-global-inline-mode))
+             (doom-first-input . sis-global-context-mode))
       :config
       (sis-ism-lazyman-config
        "com.apple.keylayout.ABC"                  ; 英文
        "com.apple.inputmethod.SCIM.Shuangpin"))   ; 系统拼音双拼
   (after! fcitx
     (setq! fcitx-remote-command "fcitx5-remote")))
+
+;; 禁用 Doom :input chinese 模块塞进来的内置 pyim 输入法
+;; 系统输入法由 sis/fcitx 接管，避免误按 C-\ 切到 pyim
+(after! pyim
+  (setq default-input-method nil))
+
+;; 关闭 evil 操作（y/d/c/p 等）后的高亮反馈
+(after! evil-goggles
+  (evil-goggles-mode -1))
 
 ;; 开启顶部 lsp 导航栏
 (after! lsp-mode
