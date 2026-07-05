@@ -16,6 +16,13 @@ chezmoi 源目录(dotfiles 仓库),管理用户 lixp 的多平台配置。
 - XDG autostart 由 systemd 的 `xdg-autostart-generator` 处理,生成 `app-<name>@autostart.service`,与 `dms.service` 并行启动、无顺序保证。
 - 代理客户端:**mihomo-party**(AUR 包 clash-party-bin,Electron)承担日常代理,监听 7897;clash-verge-rev(官方仓库,Tauri)也安装但系统代理未启用。
 
+## macOS 工作机
+
+- **待执行改造**:AeroSpace 窗口管理(物理 Win 位 = Option 承担 niri 式窗口管理)。
+  交接文档:`docs/macos-window-management.md`;配置草稿:`home/dot_config/aerospace/aerospace.toml`。
+- 已定决策(2026-07):macOS 默认 Command/Ctrl 分层不动;不装 AltTab;不做 Command↔Ctrl 互换;
+  Linux 侧改键方案(xremap/GTK key theme/Emacs Alt 层)已评估后**取消**,不要再提议。
+
 ## 重要约束
 
 - **不要中断正在运行的代理**(mihomo-party 及其内核):kill/restart/占端口前必须先征得用户同意。用户全部流量依赖它。

@@ -1,0 +1,108 @@
+# AeroSpace 配置 — macOS 窗口管理,对齐 Linux niri 手感
+# 交接说明与设计理由见仓库顶层 docs/macos-window-management.md
+#
+# 本文件按 AeroSpace guide 草拟,尚未在真机验证。mac 端执行时,
+# 命令名 / flag / 键名以 https://nikitabobko.github.io/AeroSpace/guide 当前版本为准。
+#
+# 键盘 Mac 模式下:物理 Win 位置 = Option = 此处的 alt-*,
+# 与 Linux 上物理 Win = niri Mod 同一位置。
+
+start-at-login = true
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-splits = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# 间隙按喜好调整
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
+
+[mode.main.binding]
+# 焦点移动 — niri Mod+H/J/K/L
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# 移动窗口 — niri Mod+Shift+H/J/K/L
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# 工作区 — niri Mod+1..9
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+
+# 移动窗口到工作区 — niri Mod+Shift+1..9
+# niri 默认焦点跟随移动的窗口;若当前 AeroSpace 版本支持,
+# 可改为 'move-node-to-workspace N --focus-follows-window' 以对齐手感
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+
+# 相邻工作区 — niri Mod+Page_Down/Page_Up
+# 刻意不用 alt-u/alt-i:留给终端里 helix 的 Alt-u/Alt-i(见交接文档"设计约束")
+alt-pageDown = 'workspace next'
+alt-pageUp = 'workspace prev'
+
+# 关闭窗口 — niri Mod+Q
+alt-q = 'close'
+
+# 全屏 — niri Mod+Shift+F(刻意不占 alt-f,保住终端 readline 的 M-f)
+alt-shift-f = 'fullscreen'
+
+# 浮动/平铺切换 — niri Mod+Shift+T
+alt-shift-t = 'layout floating tiling'
+
+# tiles/accordion 切换 — 近似 niri Mod+W 的 tabbed column display
+alt-w = 'layout tiles accordion'
+
+# 窗口尺寸 — niri Mod+Equal/Minus
+alt-equal = 'resize smart +50'
+alt-minus = 'resize smart -50'
+
+# 终端 — niri Mod+T(代价:遮蔽终端 M-t transpose-words,可接受)
+alt-t = 'exec-and-forget open -a Ghostty'
+
+# 多显示器 — niri Mod+Ctrl+H/L、Mod+Shift+Ctrl+H/L
+ctrl-alt-h = 'focus-monitor left'
+ctrl-alt-l = 'focus-monitor right'
+ctrl-alt-shift-h = 'move-node-to-monitor left'
+ctrl-alt-shift-l = 'move-node-to-monitor right'
+
+alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+f = ['layout floating tiling', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+
+# 需要浮动的窗口规则示例 — mac 端按实际情况取消注释/补充
+# [[on-window-detected]]
+# if.app-id = 'com.apple.systempreferences'
+# run = 'layout floating'

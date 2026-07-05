@@ -3,7 +3,14 @@
 # 系统不为 Linux 则以下忽略的内容
 .config/fcitx5/
 .config/systemd/
+.config/niri/
+.config/DankMaterialShell/
 .local/share/fcitx5/rime
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+# 系统不为 macOS 则以下忽略的内容
+.config/aerospace/
 {{- end }}
 
 {{- if ne .chezmoi.os "windows" }}
