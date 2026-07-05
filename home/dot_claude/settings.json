@@ -1,8 +1,8 @@
 {
-  "model": "claude-fable-5[1m]",
+  "model": "claude-opus-4-8",
   "statusLine": {
     "type": "command",
-    "command": "python3 /home/lixp/.claude/statusline.py"
+    "command": "python3 ~/.claude/statusline.py"
   },
   "effortLevel": "xhigh",
   "theme": "dark",
