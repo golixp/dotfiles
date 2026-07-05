@@ -1,0 +1,14 @@
+{
+  "model": "claude-fable-5[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "python3 /home/lixp/.claude/statusline.py"
+  },
+  "effortLevel": "xhigh",
+  "theme": "dark",
+  "language": "chinese",
+  "askUserQuestionTimeout": "never",
+  "permissions": {
+    "defaultMode": "auto"
+  }
+}
