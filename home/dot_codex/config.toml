@@ -1,0 +1,17 @@
+# Managed by chezmoi. Keep this file focused on durable personal defaults.
+
+model = "gpt-5.5"
+service_tier = "fast"
+
+# Official "Auto" posture: allow normal workspace work, ask for risky actions.
+approval_policy = "on-request"
+approvals_reviewer = "auto_review"
+sandbox_mode = "workspace-write"
+
+model_reasoning_effort = "xhigh"
+plan_mode_reasoning_effort = "xhigh"
+
+[tui]
+status_line_use_colors = true
+terminal_title = ["activity", "app-name"]
+status_line = ["model-with-reasoning", "approval-mode", "git-branch", "context-used", "five-hour-limit", "weekly-limit"]
