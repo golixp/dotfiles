@@ -2,7 +2,7 @@
   "model": "claude-opus-4-8",
   "statusLine": {
     "type": "command",
-    "command": "python3 ~/.claude/statusline.py"
+    "command": "if command -v python >/dev/null 2>&1; then python ~/.claude/statusline.py; else python3 ~/.claude/statusline.py; fi"
   },
   "effortLevel": "xhigh",
   "theme": "dark",
