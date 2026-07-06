@@ -27,6 +27,18 @@ RED = (224, 108, 117)
 
 RESET = "\033[0m"
 
+# reasoning-effort tiers → an ascending weak→strong color ramp. This is NOT
+# grade()'s warning ramp: high effort is desirable, not dangerous, so it gets
+# its own scale (dim → green → coral → orange → red). Unknown or future tiers
+# fall back to the model's coral in main().
+EFFORT_COLORS = {
+    "low": DIM,
+    "medium": GREEN,
+    "high": CORAL,
+    "xhigh": ORANGE,
+    "max": RED,
+}
+
 
 def fg(rgb, s, bold=False):
     r, g, b = rgb
@@ -129,9 +141,15 @@ def main():
             branch = branch[:23] + "…"
         segs.append(fg(VIOLET, I_GIT) + " " + fg(VIOLET, branch))
 
-    # model
+    # model, with the reasoning-effort tier tucked right after it. effort.level
+    # is one of low/medium/high/xhigh/max (see EFFORT_COLORS); anything else
+    # falls back to the model's coral so a future tier still shows, just uncolored.
     model = (data.get("model") or {}).get("display_name") or "Claude"
-    segs.append(fg(CORAL, I_MODEL + " " + model))
+    model_seg = fg(CORAL, I_MODEL + " " + model)
+    effort = (data.get("effort") or {}).get("level")
+    if isinstance(effort, str) and effort:
+        model_seg += " " + fg(EFFORT_COLORS.get(effort, CORAL), effort, bold=True)
+    segs.append(model_seg)
 
     # context window
     cw = data.get("context_window") or {}
