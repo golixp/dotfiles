@@ -1,5 +1,25 @@
 spawn-at-startup "sh" "-c" "test -f ~/.Xresources && xrdb -merge ~/.Xresources"
 
+// 命名工作区:固定顺序,不随窗口清空而消失
+workspace "web"
+workspace "emacs"
+
+// at-startup=true 仅在 niri 启动后 60 秒内生效,
+// 平时手动开这些程序不会被强制拽到对应工作区
+window-rule {
+    match at-startup=true app-id="^zen$"
+    open-on-workspace "web"
+}
+
+window-rule {
+    // emacs-wayland (pgtk) 的 app-id 为小写 emacs;兼容 X11 版的 Emacs
+    match at-startup=true app-id="^(?i)emacs$"
+    open-on-workspace "emacs"
+}
+
+spawn-at-startup "zen-browser"
+spawn-at-startup "emacs"
+
 input {
     mouse {
         // 关闭鼠标加速，使用 1:1 的映射
