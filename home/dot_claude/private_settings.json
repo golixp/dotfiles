@@ -1,14 +1,14 @@
 {
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "if command -v python >/dev/null 2>&1; then python ~/.claude/statusline.py; else python3 ~/.claude/statusline.py; fi"
   },
-  "effortLevel": "xhigh",
-  "theme": "dark",
   "language": "chinese",
+  "effortLevel": "xhigh",
   "askUserQuestionTimeout": "never",
-  "permissions": {
-    "defaultMode": "auto"
-  }
+  "theme": "dark"
 }
