@@ -2,7 +2,7 @@
   "permissions": {
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "statusLine": {
     "type": "command",
     "command": "if command -v python >/dev/null 2>&1; then python ~/.claude/statusline.py; else python3 ~/.claude/statusline.py; fi"
