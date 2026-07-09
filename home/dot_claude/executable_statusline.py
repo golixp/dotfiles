@@ -3,10 +3,12 @@
 
 Reads the session JSON on stdin and prints a single, color-graded line:
 
-    <project> · <branch> · <model> · ctx <bar> <pct> · 5h <pct> · 7d <pct>
+    <project> · <branch> · <model> · ctx <pct> · 5h <pct> · 7d <pct>
 
 All data comes from stdin (see `code.claude.com/docs/en/statusline`); the git
-branch is read locally. No network calls, no external dependencies.
+branch is read locally. No network calls, no external dependencies. The last
+rate-limit snapshot is cached in ~/.claude/statusline-cache.json so a fresh
+session (whose stdin has no rate_limits yet) can replay it dimmed.
 """
 
 import json
@@ -103,11 +105,28 @@ def fmt_reset(resets_at, now):
     return f"{m}m"
 
 
-def bar(pct, width=8):
-    p = 0.0 if pct is None else max(0.0, min(100.0, pct))
-    filled = round(p / 100 * width)
-    color = grade(p)
-    return fg(color, "█" * filled) + fg(DIM, "░" * (width - filled))
+CACHE_PATH = os.path.expanduser("~/.claude/statusline-cache.json")
+
+
+def load_cache():
+    try:
+        with open(CACHE_PATH) as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_cache(snapshot, cached):
+    if snapshot == cached:
+        return
+    try:
+        tmp = f"{CACHE_PATH}.{os.getpid()}.tmp"
+        with open(tmp, "w") as f:
+            json.dump(snapshot, f)
+        os.replace(tmp, CACHE_PATH)
+    except Exception:
+        pass
 
 
 def main():
@@ -145,6 +164,7 @@ def main():
     # is one of low/medium/high/xhigh/max (see EFFORT_COLORS); anything else
     # falls back to the model's coral so a future tier still shows, just uncolored.
     model = (data.get("model") or {}).get("display_name") or "Claude"
+    model = model.replace(" (1M context)", "")
     model_seg = fg(CORAL, I_MODEL + " " + model)
     effort = (data.get("effort") or {}).get("level")
     if isinstance(effort, str) and effort:
@@ -156,24 +176,41 @@ def main():
     ctx = cw.get("used_percentage")
     ctx = float(ctx) if isinstance(ctx, (int, float)) else None
     if ctx is None:
-        segs.append(fg(DIM, "ctx ") + bar(None) + fg(DIM, " –"))
+        segs.append(fg(DIM, "ctx –"))
     else:
-        segs.append(fg(DIM, "ctx ") + bar(ctx) + " " + fg(grade(ctx), f"{ctx:.0f}%"))
+        segs.append(fg(DIM, "ctx ") + fg(grade(ctx), f"{ctx:.0f}%"))
 
-    # rate limits: 5-hour and 7-day, each with a reset countdown
+    # rate limits: 5-hour and 7-day, each with a reset countdown. stdin has no
+    # rate_limits until the first API response, so each live snapshot is
+    # persisted and replayed dimmed on the next fresh session; a cached window
+    # whose reset time already passed is dropped (usage reset, the old pct lies).
     now = time.time()
     rl = data.get("rate_limits") or {}
+    cache = load_cache()
+    snapshot = dict(cache)
+    for key in ("five_hour", "seven_day"):
+        if pct_of(rl.get(key)) is not None:
+            snapshot[key] = rl[key]
+    save_cache(snapshot, cache)
     for icon, label, key in ((I_5H, "5h", "five_hour"), (I_7D, "7d", "seven_day")):
         node = rl.get(key) or {}
         p = pct_of(node)
+        stale = False
+        if p is None:
+            stale = True
+            node = cache.get(key) or {}
+            resets = node.get("resets_at")
+            if isinstance(resets, (int, float)) and resets < now:
+                node = {}
+            p = pct_of(node)
         if p is None:
             segs.append(fg(DIM, f"{icon} {label} –"))
-        else:
-            seg = fg(DIM, f"{icon} {label} ") + fg(grade(p), f"{p:.0f}%")
-            reset = fmt_reset(node.get("resets_at"), now)
-            if reset:
-                seg += fg(DIM, f" {I_RESET} {reset}")
-            segs.append(seg)
+            continue
+        seg = fg(DIM, f"{icon} {label} ") + fg(DIM if stale else grade(p), f"{p:.0f}%")
+        reset = fmt_reset(node.get("resets_at"), now)
+        if reset:
+            seg += fg(DIM, f" {I_RESET} {reset}")
+        segs.append(seg)
 
     sys.stdout.write(SEP.join(segs))
 
