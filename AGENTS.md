@@ -65,11 +65,15 @@ public 仓库不放任何机密或机器特定内容。这些放到**本机不�
 
 ## 已修复问题存档(2026-07)
 
-### Electron 自启应用开机后无托盘图标
+### Electron 自启应用开机后无托盘图标(全局方案已撤销)
 
 原因:启动竞态。XDG autostart 的 Electron 应用比 dms.service 先启动,Electron/Chromium 创建托盘时 DBus 上还没有 org.kde.StatusNotifierWatcher,就永久放弃(不监听、不重试)。手动晚启动的 Electron 应用托盘正常,即为对照。
 
-修复:`home/dot_config/systemd/user/app-.service.d/10-wait-tray.conf`(dash 截断 drop-in,对所有 `app-*.service` 生效)—— `After=dms.service` + ExecStartPre 轮询等待 watcher 注册,无 DMS 环境零延迟跳过。
+曾用 `app-.service.d/10-wait-tray.conf` 给所有 `app-*.service` 注入 `After=dms.service` 和等待 watcher 的 `ExecStartPre`,但该方案已撤销并删除。
+
+撤销原因:systemd 的 dash 截断 drop-in 同样匹配 portable 创建的 `app-portable-*.service`。额外的 `ExecStartPre` 与 portable 单元的 `PrivateIPC=yes`、`PrivateUsers=yes`、`PrivateMounts=yes` 组合后,主进程在建立 `/dev/mqueue` namespace 时以 `226/NAMESPACE` 失败,导致微信等 portable 应用无法启动。
+
+约定:不要再用 `app-.service.d/` 给所有桌面应用注入启动命令;后续若继续解决 Electron 托盘竞态,必须把作用域收窄到明确的目标单元。
 
 对照知识:Tauri 应用无此问题,因为其托盘走 libayatana-appindicator,该库会监听 DBus NameOwnerChanged,watcher 后出现时会自动补注册。
 
